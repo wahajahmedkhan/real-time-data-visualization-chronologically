@@ -1,1 +1,22 @@
-<p>time-travel-selector works!</p>
+
+<div class="mt-5 mx-3" [ngClass]="isDark.value? 'invert-color':'bg-white'">
+  <div class="d-flex justify-content-between align-items-center">
+    <button mat-icon-button color="accent" routerLink="/" aria-label="back button">
+      <mat-icon>keyboard_backspace</mat-icon>
+    </button >
+    <mat-slide-toggle color="accent" class="me-2" [formControl]="isDark">
+      <span [class.text-accent]="isDark.value">Dark Mode</span></mat-slide-toggle>
+  </div>
+  <hr class="m-0 ">
+  <div class="d-flex justify-content-between align-items-center">
+    <div class="d-flex">
+
+    </div>
+    <label class="blink me-2 text-success">{{currentDate|date: 'medium'}}</label>
+  </div>
+  <hr class="mt-0">
+  <div class="row px-2">
+    <div id="chartdiv" style="width: 100%; height: 80vh"></div>
+  </div>
+
+</div>

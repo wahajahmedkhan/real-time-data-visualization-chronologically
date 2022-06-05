@@ -1,20 +1,18 @@
-import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-import { AppComponent } from './app.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { ConfigurationComponent } from './configuration/configuration.component';
-import { RouterModule, Routes } from '@angular/router';
+import {NgModule} from '@angular/core';
+import {BrowserModule} from '@angular/platform-browser';
+import {AppComponent} from './app.component';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {ConfigurationComponent} from './configuration/configuration.component';
+import {RouterModule, Routes} from '@angular/router';
 import {MatSliderModule} from "@angular/material/slider";
 import {ReactiveFormsModule} from "@angular/forms";
 import {MatButtonModule} from "@angular/material/button";
 import {MatSlideToggleModule} from "@angular/material/slide-toggle";
-import {MatFormFieldModule} from "@angular/material/form-field";
-import {MatInputModule} from "@angular/material/input";
 
 const routes: Routes = [
   {path: '', component: ConfigurationComponent},
   {
-    path: 'data',
+    path: 'data/:config',
     loadChildren: () => import('./time-travel-selector/time-travel-selector.module').then(m => m.TimeTravelSelectorModule)
   },
   {path: '**', redirectTo: ''}

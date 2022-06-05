@@ -1,0 +1,21 @@
+@use "src/scss/colors" as *;
+@keyframes blinker {
+  50% {
+    opacity: 0;
+  }
+}
+
+.blink {
+  -webkit-animation: 2s linear infinite blinker;
+  animation: 2s linear infinite blinker;
+}
+
+.text-accent {
+  color: $colorAccent;
+}
+
+.invert-color {
+  hr {
+    background-color: $colorWhite;
+  }
+}

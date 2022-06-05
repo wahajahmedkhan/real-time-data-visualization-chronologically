@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import {FormControl, FormGroup} from "@angular/forms";
 import {ConfigInterface, UtilsService} from "../core";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-configuration',
@@ -15,10 +16,10 @@ export class ConfigurationComponent {
   configFormGroup = new FormGroup({
     interval: new FormControl( 0),
     isRealTime: new FormControl(false),
-    tillDate: new FormControl([this.utilsService.dateTimeLocal(this.utilsService.futureDateFromToday(0, 0))])
+    tillDate: new FormControl(this.utilsService.dateTimeLocal(this.utilsService.futureDateFromToday(0, 0)))
   })
 
-  constructor(private utilsService: UtilsService) {
+  constructor(private utilsService: UtilsService, private router: Router) {
   }
 
   get interval(): FormControl {
@@ -42,6 +43,7 @@ export class ConfigurationComponent {
       this.intervalHint = 'The interval must be greater then zero'
       return
     }
+    this.router.navigate(['/data/',this.utilsService.encodeObjectToUri(form)]).then()
   }
 
   reset(): void {

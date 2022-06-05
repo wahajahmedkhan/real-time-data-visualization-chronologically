@@ -7,11 +7,11 @@ import {ConfigInterface} from "../interfaces/config.interface";
 export class UtilsService {
 
   encodeObjectToUri(config: ConfigInterface): string {
-    return encodeURIComponent(JSON.stringify(config));
+    return encodeURIComponent(window.btoa(JSON.stringify(config)));
   }
 
   decodeObjectToUri(encodedSting: string): ConfigInterface {
-    return JSON.parse(decodeURIComponent(encodedSting))
+    return JSON.parse(window.atob(decodeURIComponent(encodedSting)))
   }
 
   futureDateFromToday(addYears = 0, addMonths = 0, addDays = 0, addHours = 0, addMinutes = 0, addSeconds = 0): Date {
