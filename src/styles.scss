@@ -1,1 +1,57 @@
 /* You can add global styles to this file, and also import other style files */
+
+/* Importing Bootstrap SCSS file. */
+@use '~bootstrap/scss/bootstrap' as *;
+@use 'scss/colors' as *;
+@use 'scss/fonts' as *;
+
+html,
+body {
+  height: 100vh;
+  background-color: $colorDarkBlue;
+  margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif;
+  @media only screen and (max-width: 767px) {
+    background-color: $colorDarkBlue;
+  }
+}
+
+body * {
+  font-family: Roboto, 'Helvetica Neue', sans-serif;
+}
+
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+label,
+a {
+  color: $colorBlue;
+}
+
+.text-left {
+  text-align: left;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.desktop-show {
+  display: block;
+}
+
+.mobile-show {
+  display: none;
+}
+
+@media only screen and (max-width: 767px) {
+  .desktop-show {
+    display: none;
+  }
+  .mobile-show {
+    display: block;
+  }
+}

@@ -1,0 +1,182 @@
+@use 'colors' as *;
+@use 'fonts' as *;
+
+
+.bg-config {
+  background: url(../assets/images/illustration-bg.png) center/auto 85% no-repeat, center/cover no-repeat $colorDarkBlue;
+}
+
+.bg-config-boxes {
+  background: $colorWhite;
+  border-radius: 20px;
+  padding: 35px 75px;
+  margin: 0 15px;
+  min-height: 450px;
+}
+
+.config-logo {
+  width: 260px;
+}
+
+.customBtnConfig {
+  width: auto;
+  min-width: 35%;
+  height: 30px;
+  font-size: $font16;
+  color: $colorDarkBlue;
+  border-radius: 20px;
+  padding-top: 2px;
+  background: $colorVoilet;
+  transition: 0.5s ease-out;
+  border: none;
+}
+
+.customBtnConfig:hover:not(:disabled) {
+  color: $colorVoilet;
+  background-color: $colorDarkBlue;
+  background-position: left;
+}
+
+.customBtnConfig[disabled],
+.customBtnConfig[disabled]:hover {
+  background: $colorDarkGrey;
+  color: $colorWhite;
+  border: none;
+  cursor: not-allowed;
+}
+
+@media only screen and (max-width: 767px) {
+  .customBtnConfig[disabled] {
+    width: 90%;
+    height: 34px;
+  }
+
+  .customBtnConfig {
+    width: 90%;
+    height: 34px;
+    color: $colorWhite;
+    background: $colorOrange;
+    border: 2px solid $colorOrange;
+    background-size: 205%;
+    transition: 0.5s ease-out;
+  }
+
+  .customBtnConfig:hover:not(:disabled) {
+    color: $colorOrange;
+    background-color: $colorWhite;
+    background-position: left;
+  }
+
+  .bg-config-boxes {
+    padding: 15px 15px;
+    border-radius: 0;
+    margin: 0;
+    min-height: 400px;
+  }
+}
+
+.logo-text {
+  font-weight: bold;
+  font-size: $font24;
+  text-align: center;
+  color: $colorWhite;
+  line-height: 35px;
+  margin: 0;
+}
+
+.configHeading {
+  font-size: $font24;
+  line-height: 1.2;
+  text-align: center;
+  font-weight: bold;
+}
+
+img.eye_icon {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+}
+
+.rememberMeLabel {
+  position: relative;
+}
+
+.customConfigCheckbox-span {
+  position: relative;
+  left: 0;
+  top: -10px;
+  cursor: pointer;
+  font-size: $font14;
+}
+
+.customConfigCheckbox[type='checkbox'] {
+  display: inherit;
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  outline: none;
+  content: none;
+  width: 22px;
+  height: 22px;
+  border: 2px solid $colorBlue;
+  margin-right: 5px;
+  cursor: pointer;
+  padding: 0;
+}
+
+.customConfigCheckbox[type='checkbox']:before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 22px;
+  height: 22px;
+  cursor: pointer;
+}
+
+.customConfigCheckbox[type='checkbox']:checked:before {
+  background: transparent;
+  border-style: solid;
+  border-color: $colorBlue;
+  border-width: 0 3px 3px 0;
+  border-radius: 0;
+  font-weight: bold;
+  left: 8px;
+  top: 3px;
+  width: 6px;
+  height: 12px;
+  transform: rotate(45deg);
+}
+
+.text-bottom {
+  background: $colorDarkBlue;
+  font-size: 14px;
+  line-height: 21px;
+  color: #fff;
+  margin: 20px 0;
+  text-align: center;
+}
+
+.text-bottom a,
+.text-bottom a:hover,
+.text-bottom a:focus,
+.text-bottom a:active {
+  color: $colorWhite;
+  text-decoration: underline;
+}
+
+@media only screen and (max-width: 767px) {
+  .text-bottom {
+    background: $colorVoilet;
+    color: $colorBlue;
+    margin: 0;
+    padding: 15px;
+  }
+
+  .text-bottom a,
+  .text-bottom a:hover,
+  .text-bottom a:focus,
+  .text-bottom a:active {
+    color: $colorBlue;
+  }
+}
