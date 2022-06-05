@@ -1,5 +1,5 @@
 export interface ConfigInterface {
   interval: number,
-  isRealtime: boolean,
+  isRealTime: boolean,
   tillDate: string
 }

@@ -1,41 +1,72 @@
 <main class="bg-config">
-    <div class="container-fluid">
-        <div data-test="config-header">
-            <div class="row justify-content-center">
-                <div class="col-sm-12 col-md-8 col-lg-5 text-center">
-                    <a>
-                        <img
-                                src="assets/images/rocket-header.png"
-                                data-test="config-logo"
-                                class="config-logo mt-4"
-                                alt="rocket image"/>
-                    </a>
-                    <label class="mobile-show logo-text mb-5">Monitor realtime data</label>
-                </div>
-            </div>
+  <div class="container-fluid">
+    <div data-test="config-header">
+      <div class="row justify-content-center">
+        <div class="col-sm-12 col-md-8 col-lg-5 text-center">
+          <a>
+            <img src="assets/images/rocket-header.png"
+                 data-test="config-logo"
+                 class="config-logo mt-4"
+                 alt="rocket image"/>
+          </a>
+          <label class="mobile-show logo-text">Monitor realtime data</label>
         </div>
-
-        <div data-test="config-body">
-            <div class="row d-flex align-items-center justify-content-center">
-                <div class="col-sm-12 col-md-8 col-lg-5 text-center bg-config-boxes">
-
-
-                </div>
-            </div>
-        </div>
-
-        <div data-test="config-footer">
-            <div class="row d-flex align-items-center justify-content-center">
-                <div class="col-sm-12 col-md-8 text-center p-0">
-                    <h5 class="text-bottom">
-                        Imagine sitting in a rocket in space and looking out the window at the stars passing by. You
-                        always see only a section of stars, never the full space. By speed and position <a>(forward,
-                        backward, sideways)</a> you see other stars or zoom in on a section and see more details of the
-                        stars by getting closer to them. You can also stop the rocket and then look at the stars in
-                        peace.
-                    </h5>
-                </div>
-            </div>
-        </div>
+      </div>
     </div>
+
+    <div data-test="config-body" [formGroup]="configFormGroup">
+      <div class="row d-flex justify-content-center">
+        <div class="col-sm-12 col-md-8 col-lg-5 bg-config-boxes">
+          <div class="d-flex justify-content-between  align-items-center my-4">
+            <label for="interval" class="col-form-label w-25">Interval</label>
+            <mat-slider formControlName="interval"
+                        id="interval"
+                        color="primary"
+                        thumbLabel (change)="intervalHint = null"
+                        [displayWith]="formatLabel"
+                        tickInterval="100"
+                        step="100"
+                        min="0"
+                        max="500"
+                        aria-label="units"></mat-slider>
+            <label class="w-25 col-form-label"
+                   [ngClass]="[interval.value > 0? 'text-success': 'text-danger']">{{interval.value}}ms.</label>
+          </div>
+          <label *ngIf="intervalHint" class="text-danger">{{intervalHint}}</label>
+          <div class="d-flex align-items-center justify-content-between my-4">
+            <label class="col-form-label w-25">Real Time</label>
+            <mat-slide-toggle color="primary" formControlName="isRealTime"></mat-slide-toggle>
+            <label class="w-25 col-form-label"
+                   [ngClass]="[isRealTime.value? 'text-success': 'text-danger']">{{isRealTime.value ? 'Enabled' : 'Disabled'}}</label>
+          </div>
+
+          <div class="d-flex align-items-center justify-content-between my-4 " [class.invisible]="isRealTime.value">
+            <label class="col-form-label w-25">Till Date</label>
+            <input class="form-control w-50" formControlName="tillDate"  type="datetime-local" [min]="minDate">
+            <label class="w-25 col-form-label"></label>
+          </div>
+
+          <div class="d-flex justify-content-between mt-5 pt-5">
+            <button (click)="reset()" mat-button color="warn">Reset</button>
+            <button mat-raised-button color="primary" (click)="generate()">Generate</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div data-test="config-footer">
+      <div class="row d-flex align-items-center justify-content-center">
+        <div class="col-sm-12 col-md-8 text-center p-0">
+          <h5 class="text-bottom">
+            Imagine sitting in a rocket in space and looking out the window at the stars passing by. You
+            always see only a section of stars, never the full space. By speed and position <a>(forward,
+            backward, sideways)</a> you see other stars or zoom in on a section and see more details of the
+            stars by getting closer to them. You can also stop the rocket and then look at the stars in
+            peace.
+          </h5>
+        </div>
+      </div>
+    </div>
+  </div>
 </main>
