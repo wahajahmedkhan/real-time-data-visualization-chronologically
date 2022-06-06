@@ -18,6 +18,8 @@ import {FormControl} from "@angular/forms";
 })
 export class TimeTravelSelectorComponent implements OnInit, AfterViewInit, OnDestroy {
 
+  currentDate = new Date();
+  isDark = new FormControl(true)
   private $destroy = new Subject();
   private config: ConfigInterface = {
     isRealTime: true,
@@ -27,13 +29,10 @@ export class TimeTravelSelectorComponent implements OnInit, AfterViewInit, OnDes
   private readonly interval?: Observable<number>;
   private root?: am5.Root;
   private chart?: am5xy.XYChart;
-  private xAxis?: am5xy.CategoryAxis<am5xy.AxisRenderer>
+  private xAxis?: am5xy.DateAxis<am5xy.AxisRenderer>
   private yAxis?: am5xy.ValueAxis<am5xy.AxisRenderer>
   private data: any = []
   private series?: am5xy.ColumnSeries
-  currentDate = new Date();
-  isDark = new FormControl(false)
-
 
   constructor(
     private route: ActivatedRoute,
@@ -45,7 +44,7 @@ export class TimeTravelSelectorComponent implements OnInit, AfterViewInit, OnDes
     if (routeData) {
       try {
         this.config = this.utilsService.decodeObjectToUri(routeData)
-        this.interval = interval(this.config.interval);
+        this.interval = interval(5000);
       } catch (e) {
         alert('Internal server error. Please make the selection again')
         this.router.navigate(['/']).then()
@@ -55,9 +54,7 @@ export class TimeTravelSelectorComponent implements OnInit, AfterViewInit, OnDes
 
   ngOnInit(): void {
     this.loadData()
-    this.isDark.valueChanges.pipe(takeUntil(this.$destroy)).subscribe((res)=> {
-      this.root?.setThemes([res? am5themes_Dark.new(this.root): am5themes_Animated.new(this.root)])
-    })
+    this.isDark.valueChanges.pipe(takeUntil(this.$destroy)).subscribe(() => this.setChartTheme())
   }
 
   // Run the function only in the browser
@@ -69,9 +66,17 @@ export class TimeTravelSelectorComponent implements OnInit, AfterViewInit, OnDes
     }
   }
 
+  setChartTheme(): void {
+    if (this.root) {
+      const theme = this.isDark.value ? [am5themes_Animated.new(this.root), am5themes_Dark.new(this.root)] : [am5themes_Animated.new(this.root)]
+      this.root.setThemes(theme);
+    }
+
+  }
+
   initChart(): void {
     this.root = am5.Root.new("chartdiv");
-    this.root.setThemes([am5themes_Animated.new(this.root)]);
+    this.setChartTheme();
     this.chart = this.root.container.children.push(
       am5xy.XYChart.new(this.root, {
         panX: false,
@@ -84,9 +89,18 @@ export class TimeTravelSelectorComponent implements OnInit, AfterViewInit, OnDes
   }
 
   loadData(): void {
-    if (this.interval){
-      this.interval.pipe(takeUntil(this.$destroy)).subscribe(()=> {
+    if (this.interval) {
+      this.interval.pipe(takeUntil(this.$destroy)).subscribe(() => {
         this.currentDate = new Date();
+        // const test = [...new Array(this.utilsService.getRandomIntInclusive(0,1000))].map(() => {
+        //   const random = Math.random();
+        //     return {
+        //       key: (random + 1).toString(36).substring(7),
+        //       value: Math.round(random * 40),
+        //       timestamp: + new Date()
+        //     }
+        //   })
+        // console.log(test);
       })
     }
     this.data = [
@@ -111,13 +125,15 @@ export class TimeTravelSelectorComponent implements OnInit, AfterViewInit, OnDes
   ngAfterViewInit() {
     this.generateGraph();
   }
-  generateGraph():void {
+
+  generateGraph(): void {
     this.browserOnly(() => {
       this.initChart()
       this.setCursor()
       this.setAxis();
       this.setSeries()
       this.addLegend();
+      this.setScrollBar()
     });
   }
 
@@ -140,6 +156,32 @@ export class TimeTravelSelectorComponent implements OnInit, AfterViewInit, OnDes
 
   setAxis(): void {
     if (this.chart && this.root) {
+      // let xAxis = chart.xAxes.push(am5xy.DateAxis.new(root, {
+      //   maxDeviation: 0,
+      //   baseInterval: {
+      //     timeUnit: "day",
+      //     count: 1
+      //   },
+      //   renderer: am5xy.AxisRendererX.new(root, {}),
+      //   tooltip: am5.Tooltip.new(root, {})
+      // }));
+      //
+      // let yAxis = chart.yAxes.push(am5xy.ValueAxis.new(root, {
+      //   renderer: am5xy.AxisRendererY.new(root, {})
+      // }));
+      //
+      // let series = chart.series.push(am5xy.ColumnSeries.new(root, {
+      //   name: "Series",
+      //   xAxis: xAxis,
+      //   yAxis: yAxis,
+      //   valueYField: "value",
+      //   valueXField: "date",
+      //   tooltip: am5.Tooltip.new(root, {
+      //     labelText: "{valueY}"
+      //   })
+      // }));
+
+
       // Create Y-axis
       this.yAxis = this.chart.yAxes.push(
         am5xy.ValueAxis.new(this.root, {
@@ -149,9 +191,9 @@ export class TimeTravelSelectorComponent implements OnInit, AfterViewInit, OnDes
 
       // Create X-Axis
       this.xAxis = this.chart.xAxes.push(
-        am5xy.CategoryAxis.new(this.root, {
-          renderer: am5xy.AxisRendererX.new(this.root, {}),
-          categoryField: "category"
+        am5xy.DateAxis.new(this.root, {
+          baseInterval: { timeUnit: "millisecond", count: this.config.interval },
+          renderer: am5xy.AxisRendererX.new(this.root, {})
         })
       );
       this.xAxis.data.setAll(this.data);
@@ -172,6 +214,13 @@ export class TimeTravelSelectorComponent implements OnInit, AfterViewInit, OnDes
       let legend = this.chart.children.push(am5.Legend.new(this.root, {}));
       legend.data.setAll(this.chart.series.values);
     }
+  }
+  setScrollBar(): void {
+    if (this.chart && this.root) {
+      this.chart.set("scrollbarX", am5.Scrollbar.new(this.root, { orientation: "horizontal" }));
+      this.chart.set("scrollbarY", am5.Scrollbar.new(this.root, { orientation: "vertical" }));
+    }
+
   }
 
   ngOnDestroy() {
