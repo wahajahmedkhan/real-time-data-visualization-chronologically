@@ -1,17 +1,16 @@
 import {Injectable} from '@angular/core';
-import {ConfigInterface} from "../interfaces/config.interface";
+import {ConfigInterface} from '../interfaces/config.interface';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class UtilsService {
-
   encodeObjectToUri(config: ConfigInterface): string {
     return encodeURIComponent(window.btoa(JSON.stringify(config)));
   }
 
   decodeObjectToUri(encodedSting: string): ConfigInterface {
-    return JSON.parse(window.atob(decodeURIComponent(encodedSting)))
+    return JSON.parse(window.atob(decodeURIComponent(encodedSting)));
   }
 
   futureDateFromToday(addYears = 0, addMonths = 0, addDays = 0, addHours = 0, addMinutes = 0, addSeconds = 0): Date {
@@ -25,14 +24,16 @@ export class UtilsService {
   }
 
   dateTimeLocal(date: Date): string {
-    return `${date.getFullYear()}-${date.getMonth() >= 10 ? (date.getMonth()+1) : '0' + (date.getMonth()+1)}-${date.getDate() >= 10 ? date.getDate() : '0' + date.getDate()}T${date.getHours() >= 10 ? date.getHours() : '0' + date.getHours()}:${date.getMinutes() >= 10 ? date.getMinutes() : '0' + date.getMinutes()}:${date.getSeconds() >= 10 ? date.getSeconds() : '0' + date.getSeconds()}`
+    return `${date.getFullYear()}-${date.getMonth() >= 10 ? date.getMonth() + 1 : '0' + (date.getMonth() + 1)}-${
+      date.getDate() >= 10 ? date.getDate() : '0' + date.getDate()
+    }T${date.getHours() >= 10 ? date.getHours() : '0' + date.getHours()}:${
+      date.getMinutes() >= 10 ? date.getMinutes() : '0' + date.getMinutes()
+    }:${date.getSeconds() >= 10 ? date.getSeconds() : '0' + date.getSeconds()}`;
   }
 
-
-  getRandomIntInclusive(min:number, max:number) {
+  getRandomIntInclusive(min: number, max: number) {
     min = Math.ceil(min);
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min + 1) + min);
   }
-
 }

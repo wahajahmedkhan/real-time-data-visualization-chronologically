@@ -1,7 +1,6 @@
 @use 'colors' as *;
 @use 'fonts' as *;
 
-
 .bg-config {
   background: url(../assets/images/illustration-bg.png) center/auto 85% no-repeat, center/cover no-repeat $colorDarkBlue;
 }

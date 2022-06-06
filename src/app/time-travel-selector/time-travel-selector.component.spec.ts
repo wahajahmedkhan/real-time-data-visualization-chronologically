@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { TimeTravelSelectorComponent } from './time-travel-selector.component';
+import {TimeTravelSelectorComponent} from './time-travel-selector.component';
 
 describe('TimeTravelSelectorComponent', () => {
   let component: TimeTravelSelectorComponent;
@@ -8,9 +8,8 @@ describe('TimeTravelSelectorComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ TimeTravelSelectorComponent ]
-    })
-    .compileComponents();
+      declarations: [TimeTravelSelectorComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {
