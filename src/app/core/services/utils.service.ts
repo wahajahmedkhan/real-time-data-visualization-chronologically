@@ -31,9 +31,4 @@ export class UtilsService {
     }:${date.getSeconds() >= 10 ? date.getSeconds() : '0' + date.getSeconds()}`;
   }
 
-  getRandomIntInclusive(min: number, max: number) {
-    min = Math.ceil(min);
-    max = Math.floor(max);
-    return Math.floor(Math.random() * (max - min + 1) + min);
-  }
 }

@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "time-traveler-data-monitoring": {
+      "hosting": {
+        "real-time-data-visualization-chronologically": [
+          "time-traveler-data-monitoring"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "time-traveler-data-monitoring"
+  }
+}
