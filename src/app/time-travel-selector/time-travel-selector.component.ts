@@ -80,7 +80,7 @@ export class TimeTravelSelectorComponent implements OnInit, AfterViewInit, OnDes
   setChartTheme(): void {
     if (this.root) {
       const theme = this.isDark.value
-        ? [am5themes_Animated.new(this.root), am5themes_Dark.new(this.root)]
+        ? [am5themes_Dark.new(this.root)]
         : [am5themes_Animated.new(this.root)];
       this.root.setThemes(theme);
     }
@@ -110,32 +110,32 @@ export class TimeTravelSelectorComponent implements OnInit, AfterViewInit, OnDes
       Object.entries(this.workers).forEach(([key, worker]) => {
         worker.onmessage = ({ data }) => {
           if (this.series && this.xAxis) {
-            let lastDataItem = this.series.dataItems[this.series.dataItems.length - 1];
-            let lastValue;
-            if (lastDataItem) {
-              lastValue = lastDataItem.get("valueY");
-            }
+            // let lastDataItem = this.series.dataItems[this.series.dataItems.length - 1];
+            // let lastValue;
+            // if (lastDataItem) {
+            //   lastValue = lastDataItem.get("valueY");
+            // }
             this.series.data.push(data);
-            const newDataItem = this.series.dataItems[this.series.dataItems.length - 1];
-            newDataItem.animate({
-              key: "valueYWorking",
-              to: data.value,
-              from: lastValue,
-              duration: 600,
-              easing: this.easing
-            });
-            const animation = newDataItem.animate({
-              key: "locationX",
-              to: 0.5,
-              from: -0.5,
-              duration: 300
-            });
-            if (animation) {
-              let tooltip = this.xAxis.get("tooltip");
-              if (tooltip && !tooltip.isHidden()) {
-                animation.events.on("stopped", ()=> this.xAxis?.updateTooltip())
-              }
-            }
+            // const newDataItem = this.series.dataItems[this.series.dataItems.length - 1];
+            // newDataItem.animate({
+            //   key: "valueYWorking",
+            //   to: data.value,
+            //   from: lastValue,
+            //   duration: 600,
+            //   easing: this.easing
+            // });
+            // const animation = newDataItem.animate({
+            //   key: "locationX",
+            //   to: 0.5,
+            //   from: -0.5,
+            //   duration: 300
+            // });
+            // if (animation) {
+            //   let tooltip = this.xAxis.get("tooltip");
+            //   if (tooltip && !tooltip.isHidden()) {
+            //     animation.events.on("stopped", ()=> this.xAxis?.updateTooltip())
+            //   }
+            // }
           }
         }
       });
@@ -263,7 +263,7 @@ export class TimeTravelSelectorComponent implements OnInit, AfterViewInit, OnDes
         am5xy.DateAxis.new(this.root, {
           baseInterval: {
             timeUnit: "second",
-            count: 2
+            count: 1
           },
           renderer: am5xy.AxisRendererX.new(this.root, {}),
           tooltip: am5.Tooltip.new(this.root, {})
