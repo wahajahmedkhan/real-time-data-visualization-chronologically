@@ -121,7 +121,7 @@ export class TimeTravelSelectorComponent implements OnInit, AfterViewInit, OnDes
               key: "valueYWorking",
               to: data.value,
               from: lastValue,
-              duration: 200,
+              duration: 600,
               easing: this.easing
             });
             const animation = newDataItem.animate({
@@ -157,10 +157,13 @@ export class TimeTravelSelectorComponent implements OnInit, AfterViewInit, OnDes
             return;
           }
           this.currentDate = new Date();
-          if (this.workers) {
-            this.workers[this.lastWorker].postMessage("");
-            this.lastWorker = this.lastWorker === 2 ? 0 : this.lastWorker + 1;
+          if (this.series){
+            if (this.workers) {
+              this.workers[this.lastWorker].postMessage('');
+              this.lastWorker = this.lastWorker === 2 ? 0 : this.lastWorker + 1;
+            }
           }
+
         });
       }
 
@@ -180,6 +183,11 @@ export class TimeTravelSelectorComponent implements OnInit, AfterViewInit, OnDes
       this.loadData();
       this.addLegend();
       this.setScrollBar();
+      if (this.chart) {
+        console.log('sdf')
+        this.chart?.appear(1000, 100);
+      }
+
     });
 
   }
@@ -199,6 +207,8 @@ export class TimeTravelSelectorComponent implements OnInit, AfterViewInit, OnDes
           })
         })
       );
+      this.series.data.setAll([]);
+
       // this.series.data.setAll(
       //   [{
       //     date: new Date(2021, 0, 1).getTime(),
@@ -251,10 +261,9 @@ export class TimeTravelSelectorComponent implements OnInit, AfterViewInit, OnDes
     if (this.chart && this.root) {
       this.xAxis = this.chart.xAxes.push(
         am5xy.DateAxis.new(this.root, {
-          maxDeviation: 0,
           baseInterval: {
             timeUnit: "second",
-            count: 1
+            count: 2
           },
           renderer: am5xy.AxisRendererX.new(this.root, {}),
           tooltip: am5.Tooltip.new(this.root, {})
